@@ -1,0 +1,34 @@
+﻿<table class="table table-bordered table-sm">
+    <thead>
+        <tr>
+            <th scope="col" class="text-center" style="width:20%;">Attending daily standup?</th>
+            <th scope="col">Attendee</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var attendee in Attendees)
+        {
+            <MeetingAttendee AttendeeName="@attendee.Name" @bind-IsPresentToday="@attendee.IsAttendingMeetingToday" />
+        }
+    </tbody>
+</table>
+
+<NewMeetingAttendee OnNewItem="@OnNewItem" />
+
+@code {
+
+    [Parameter]
+    public List<Attendee> Attendees { get; set; }
+
+    [Parameter]
+    public EventCallback<List<Attendee>> AttendeesChanged { get; set; }
+
+    void OnNewItem(string newAttendeeName)
+    {
+        if (Attendees != null)
+        {
+            Attendees.Add(new Attendee { Name = newAttendeeName, IsAttendingMeetingToday = true });
+            StateHasChanged();
+        }
+    }
+}

@@ -1,0 +1,30 @@
+﻿<textarea style="height: 100%; width: 100%;" class="table table-bordered user-select-all" readonly="readonly">@sbString</textarea>
+
+
+@code {
+    @using System.Text
+
+    [Parameter]
+    public List<Attendee> Attendees { get; set; }
+
+    string sbString = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        if (Attendees != null)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < Attendees.Count; i++)
+            {
+                if (Attendees[i].IsAttendingMeetingToday)
+                {
+                    sb.AppendLine((i + 1) + "." + Attendees[i].Name);
+                }
+
+            }
+
+            sbString = sb.ToString();
+        }
+    }
+}

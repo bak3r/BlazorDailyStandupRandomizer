@@ -1,0 +1,35 @@
+﻿<tr class="meetingattendee @rowClass">
+    <td class="text-center">
+        <input type="checkbox" @bind="IsPresentToday" />
+    </td>
+    <td class="@attendeeNameClass">@AttendeeName</td>
+</tr>
+
+@code {
+
+    private bool _isPresentToday;
+
+    [Parameter]
+    public string AttendeeName { get; set; }
+
+    [Parameter]
+    public bool IsPresentToday
+    {
+        get => _isPresentToday;
+        set
+        {
+            if (_isPresentToday == value) return;
+            _isPresentToday = value;
+            IsPresentTodayChanged.InvokeAsync(value);
+        }
+    }
+
+    [Parameter]
+    public EventCallback<bool> IsPresentTodayChanged { get; set; }
+
+    string attendeeNameClass => IsPresentToday ? "present text-muted" : null;
+    string rowClass => IsPresentToday ? "table-primary" : null;
+
+
+}
+

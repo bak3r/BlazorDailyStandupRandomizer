@@ -1,0 +1,59 @@
+﻿@page "/"
+
+<h1>Daily standup</h1>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm">
+            <MeetingAttendees @bind-Attendees="meetingAttendees" />
+        </div>
+        <div class="col-2 row align-items-center">
+            <button class="btn btn-primary" @onclick="RandomizeList">Randomize list</button>
+        </div>
+        <div class="col-sm">
+            <FinalizedListOutput Attendees="@finalizedList" />
+        </div>
+    </div>
+</div>
+
+@code {
+
+    List<Attendee> meetingAttendees = new List<Attendee>();
+    List<Attendee> finalizedList = new List<Attendee>();
+
+
+
+    protected override Task OnInitializedAsync()
+    {
+        PopulateDefaultAttendees();
+        return base.OnInitializedAsync();
+    }
+
+    public void PopulateDefaultAttendees()
+    {
+        meetingAttendees.Add(new Attendee { Name = "Person A", IsAttendingMeetingToday = true });
+        meetingAttendees.Add(new Attendee { Name = "Person B", IsAttendingMeetingToday = true });
+        meetingAttendees.Add(new Attendee { Name = "Person C", IsAttendingMeetingToday = true });
+        meetingAttendees.Add(new Attendee { Name = "Person D", IsAttendingMeetingToday = true });
+        meetingAttendees.Add(new Attendee { Name = "Person E", IsAttendingMeetingToday = true });
+        meetingAttendees.Add(new Attendee { Name = "Person F", IsAttendingMeetingToday = true });
+        meetingAttendees.Add(new Attendee { Name = "Person G", IsAttendingMeetingToday = true });
+        meetingAttendees.Add(new Attendee { Name = "Person H", IsAttendingMeetingToday = true });
+        meetingAttendees.Add(new Attendee { Name = "Person I", IsAttendingMeetingToday = true });
+        meetingAttendees.Add(new Attendee { Name = "Person J", IsAttendingMeetingToday = true });
+        meetingAttendees.Add(new Attendee { Name = "Person K", IsAttendingMeetingToday = true });
+        meetingAttendees.Add(new Attendee { Name = "Person L", IsAttendingMeetingToday = true });
+        meetingAttendees.Add(new Attendee { Name = "Person M", IsAttendingMeetingToday = true });
+        meetingAttendees.Add(new Attendee { Name = "Person N", IsAttendingMeetingToday = true });
+        meetingAttendees.Add(new Attendee { Name = "Person O", IsAttendingMeetingToday = true });
+        meetingAttendees.Add(new Attendee { Name = "Person P", IsAttendingMeetingToday = true });
+    }
+
+    public void RandomizeList()
+    {
+        finalizedList = (from ma in meetingAttendees
+                         where ma.IsAttendingMeetingToday
+                         select ma).ToList();
+        finalizedList.Shuffle();
+    }
+}

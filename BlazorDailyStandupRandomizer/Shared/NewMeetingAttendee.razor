@@ -1,0 +1,37 @@
+﻿<div class="input-group input-group-lg">
+    <input type="text" class="form-control"
+           placeholder="Enter name here"
+           @bind-value="Name" @bind-value:event="oninput" @onkeypress="KeyPress" />
+    <div class="input-group-append">
+        <button class="btn btn-secondary @buttonDisabled" @onclick="NewItem">Add (Enter)</button>
+    </div>
+</div>
+
+@code {
+    string Name
+    {
+        get; set;
+    }
+
+    string buttonDisabled => Name != null && Name.Length > 0 ? null : "disabled";
+
+    [Parameter]
+    public Action<string> OnNewItem { get; set; }
+
+    void NewItem()
+    {
+        if (OnNewItem != null)
+        {
+            OnNewItem(Name);
+            Name = "";
+        }
+    }
+
+    void KeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            NewItem();
+        }
+    }
+}
